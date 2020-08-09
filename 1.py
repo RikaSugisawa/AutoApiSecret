@@ -16,18 +16,16 @@ path=sys.path[0]+r'/1.txt'
 num1 = 0
 
 def gettoken(refresh_token):
-    headers={'Content-Type':'application/x-www-form-urlencoded'}
-    payload = f'grant_type=refresh_token&refresh_token={refresh_token.strip()}&client_id={id}&client_secret={secret}&redirect_uri=http://localhost:53682/'
-#     data={'grant_type': 'refresh_token',
-#           'refresh_token': refresh_token,
-#           'client_id':id,
-#           'client_secret':secret,
-#           'redirect_uri':'http://localhost:53682/'
-#          }
-    html = req.post('https://login.microsoftonline.com/common/oauth2/v2.0/token',data=payload,headers=headers)
-    print(payload)
+    headers={'Content-Type':'application/x-www-form-urlencoded'
+            }
+    data={'grant_type': 'refresh_token',
+          'refresh_token': refresh_token,
+          'client_id':id,
+          'client_secret':secret,
+          'redirect_uri':'http://localhost:53682/'
+         }
+    html = req.post('https://login.microsoftonline.com/common/oauth2/v2.0/token',data=data,headers=headers)
     jsontxt = json.loads(html.text)
-    print(jsontxt)
     refresh_token = jsontxt['refresh_token']
     access_token = jsontxt['access_token']
     with open(path, 'w+') as f:
